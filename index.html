@@ -3,13 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>梅窩小龍公開賽 計分系統</title>
-  <link rel="manifest" href="manifest.webmanifest">
-  <meta name="theme-color" content="#c92a2a">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="梅窩龍舟計分">
-  <link rel="apple-touch-icon" href="icon-192.png">
+<title>梅窩小龍公開賽 計分系統（手機/平板版）</title>
 <!-- SheetJS for Excel export -->
 <script>
 /*! SheetJS xlsx 0.18.5 — 已內嵌，離線可用 */
@@ -494,6 +488,190 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
   .bb-btns .bb-ok { background: #0b5394; color: #fff; border-color: #0b5394; font-weight: 600; }
   .bb-btns .bb-ok:focus, .bb-btns .bb-cancel:focus { outline: 3px solid #a5c8e8; }
 
+
+  /* ================================================================
+     手機 / 平板響應式版本（V3 Mobile 新增，保留原有功能不變）
+     ================================================================ */
+  html { -webkit-text-size-adjust: 100%; }
+  input, button, select, textarea { touch-action: manipulation; }
+
+  /* ---- 平板 / 細芒（≤1100px）：頂欄吸頂、闊表橫向捲動 ---- */
+  @media (max-width: 1100px) {
+    body { padding: 10px; }
+    .container { border-radius: 0; box-shadow: 0 2px 12px rgba(0,0,0,0.10); overflow: visible !important; }
+    .control-bar { position: sticky; top: 0; z-index: 200; box-shadow: 0 2px 8px rgba(0,0,0,0.25); }
+    .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; }
+    #table-women, #table-mixed, #table-men { min-width: 880px; }
+    #table-finals1, #table-finals2 { min-width: 700px; }
+    #table-schedule { min-width: 620px; }
+    #generalScoreTable { min-width: 920px; }
+    table.score-table input, #generalScoreTable input { font-size: 14px !important; }
+    .page-header { padding: 12px 14px 10px 14px !important; }
+    .chinese-title { font-size: 28px !important; letter-spacing: 3px !important; }
+    .english-title { font-size: 13px !important; }
+    .date-badge { position: static !important; flex-direction: row; gap: 6px; }
+    .dragon-logo { width: 52px; height: 40px; margin-right: 10px; }
+    .section-banner { font-size: 16px !important; padding: 6px 20px !important; }
+  }
+
+  /* ---- 手機（≤820px）：卡片模式 ---- */
+  @media (max-width: 820px) {
+    body { padding: 8px; }
+    .control-bar { padding: 8px; gap: 6px; align-items: stretch; }
+    .tab-buttons { flex: 0 0 100%; flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 4px; }
+    .tab-btn { flex: 0 0 auto; white-space: nowrap; min-height: 42px; padding: 10px 14px !important; font-size: 13px !important; border-radius: 6px; }
+    .control-bar > button { min-height: 44px; padding: 10px 12px !important; font-size: 13px !important; border-radius: 8px !important; flex: 1 1 auto; }
+    .page-header { padding: 10px 10px 8px 10px !important; }
+    .title-row { flex-wrap: wrap; gap: 4px; }
+    .chinese-title { font-size: 22px !important; letter-spacing: 2px !important; }
+    .english-title { font-size: 11px !important; }
+    .dragon-logo { width: 38px; height: 30px; margin-right: 6px; }
+    .section-banner { font-size: 13px !important; padding: 4px 14px !important; margin-top: 6px !important; border-radius: 14px !important; }
+    .tab-content { padding: 12px 10px 32px 10px !important; }
+    .tip-box { margin: 10px 10px 0 10px !important; font-size: 13px !important; }
+
+    /* 卡片模式：初賽三表 + 通用計分表 */
+    body.card-mode #table-women, body.card-mode #table-mixed, body.card-mode #table-men,
+    body.card-mode #generalScoreTable { display: block; min-width: 0 !important; }
+    body.card-mode #table-women thead, body.card-mode #table-mixed thead, body.card-mode #table-men thead,
+    body.card-mode #generalScoreTable thead { display: none; }
+    body.card-mode #table-women tbody, body.card-mode #table-mixed tbody, body.card-mode #table-men tbody,
+    body.card-mode #generalScoreTable tbody { display: block; }
+    body.card-mode #table-women tbody tr, body.card-mode #table-mixed tbody tr, body.card-mode #table-men tbody tr,
+    body.card-mode #generalScoreTable tbody tr {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+      padding: 12px; margin: 0 0 14px 0; background: #fff;
+      border: 1.5px solid #d3a4b6; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    }
+    body.card-mode #generalScoreTable tbody tr { border-color: #b0cfe8; }
+    body.card-mode #table-women tbody td, body.card-mode #table-mixed tbody td, body.card-mode #table-men tbody td,
+    body.card-mode #generalScoreTable tbody td {
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      border: none; padding: 4px; background: transparent; text-align: center;
+    }
+    body.card-mode #table-women tbody td::before, body.card-mode #table-mixed tbody td::before,
+    body.card-mode #table-men tbody td::before, body.card-mode #generalScoreTable tbody td::before {
+      display: block; font-size: 11px; font-weight: 700; color: #8a8f98;
+      letter-spacing: 1px; margin-bottom: 3px; white-space: nowrap;
+    }
+    /* 初賽表欄位標籤 */
+    body.card-mode #table-women tbody td:nth-child(1)::before,
+    body.card-mode #table-mixed tbody td:nth-child(1)::before,
+    body.card-mode #table-men tbody td:nth-child(1)::before { content: "場次"; }
+    body.card-mode #table-women tbody td:nth-child(2)::before,
+    body.card-mode #table-mixed tbody td:nth-child(2)::before,
+    body.card-mode #table-men tbody td:nth-child(2)::before { content: "時間"; }
+    body.card-mode #table-women tbody td:nth-child(3)::before,
+    body.card-mode #table-mixed tbody td:nth-child(3)::before,
+    body.card-mode #table-men tbody td:nth-child(3)::before { content: "編號"; }
+    body.card-mode #table-women tbody td:nth-child(4)::before,
+    body.card-mode #table-mixed tbody td:nth-child(4)::before,
+    body.card-mode #table-men tbody td:nth-child(4)::before { content: "隊名"; }
+    body.card-mode #table-women tbody td:nth-child(5)::before,
+    body.card-mode #table-mixed tbody td:nth-child(5)::before,
+    body.card-mode #table-men tbody td:nth-child(5)::before { content: "線道1"; }
+    body.card-mode #table-women tbody td:nth-child(6)::before,
+    body.card-mode #table-mixed tbody td:nth-child(6)::before,
+    body.card-mode #table-men tbody td:nth-child(6)::before { content: "第一輪"; }
+    body.card-mode #table-women tbody td:nth-child(7)::before,
+    body.card-mode #table-mixed tbody td:nth-child(7)::before,
+    body.card-mode #table-men tbody td:nth-child(7)::before { content: "線道2"; }
+    body.card-mode #table-women tbody td:nth-child(8)::before,
+    body.card-mode #table-mixed tbody td:nth-child(8)::before,
+    body.card-mode #table-men tbody td:nth-child(8)::before { content: "第二輪"; }
+    body.card-mode #table-women tbody td:nth-child(9)::before,
+    body.card-mode #table-mixed tbody td:nth-child(9)::before,
+    body.card-mode #table-men tbody td:nth-child(9)::before { content: "合計"; }
+    body.card-mode #table-women tbody td:nth-child(10)::before,
+    body.card-mode #table-mixed tbody td:nth-child(10)::before,
+    body.card-mode #table-men tbody td:nth-child(10)::before { content: "操作"; }
+    /* 通用計分表欄位標籤 */
+    body.card-mode #generalScoreTable tbody td:nth-child(1)::before { content: "場次"; }
+    body.card-mode #generalScoreTable tbody td:nth-child(2)::before { content: "時間"; }
+    body.card-mode #generalScoreTable tbody td:nth-child(3)::before { content: "編號"; }
+    body.card-mode #generalScoreTable tbody td:nth-child(4)::before { content: "隊名"; }
+    body.card-mode #generalScoreTable tbody td:nth-child(5)::before { content: "線道1"; }
+    body.card-mode #generalScoreTable tbody td:nth-child(6)::before { content: "第一輪"; }
+    body.card-mode #generalScoreTable tbody td:nth-child(7)::before { content: "線道2"; }
+    body.card-mode #generalScoreTable tbody td:nth-child(8)::before { content: "第二輪"; }
+    body.card-mode #generalScoreTable tbody td:nth-child(9)::before { content: "合計"; }
+    body.card-mode #generalScoreTable tbody td:nth-child(10)::before { content: "操作"; }
+    /* 隊名欄佔全行 */
+    body.card-mode #table-women tbody td:nth-child(4),
+    body.card-mode #table-mixed tbody td:nth-child(4),
+    body.card-mode #table-men tbody td:nth-child(4),
+    body.card-mode #generalScoreTable tbody td:nth-child(4) { grid-column: 1 / -1; }
+    body.card-mode #table-women tbody td.team-cell,
+    body.card-mode #table-mixed tbody td.team-cell,
+    body.card-mode #table-men tbody td.team-cell {
+      flex-direction: row; justify-content: flex-start; font-weight: 600;
+      font-size: 15px !important; text-align: left; padding: 6px 8px;
+      background: #f8fbfd !important; border-radius: 8px;
+    }
+    /* 卡片內輸入格放大（16px 防 iOS 自動縮放） */
+    body.card-mode #table-women tbody td input,
+    body.card-mode #table-mixed tbody td input,
+    body.card-mode #table-men tbody td input,
+    body.card-mode #generalScoreTable tbody td input {
+      width: 100% !important; min-width: 0 !important; max-width: 100% !important;
+      height: 42px; font-size: 16px !important; padding: 6px 4px !important;
+      border-radius: 6px; box-sizing: border-box;
+    }
+    body.card-mode #generalScoreTable .g-team { text-align: left; }
+    /* 合計格 */
+    body.card-mode #table-women tbody td.total-cell,
+    body.card-mode #table-mixed tbody td.total-cell,
+    body.card-mode #table-men tbody td.total-cell,
+    body.card-mode #generalScoreTable tbody td.g-total {
+      background: #e8f4fd !important; border-radius: 8px;
+      font-size: 16px !important; font-weight: 700; white-space: nowrap;
+    }
+    /* 刪除掣 */
+    body.card-mode #table-women tbody button.heats-row-del,
+    body.card-mode #table-mixed tbody button.heats-row-del,
+    body.card-mode #table-men tbody button.heats-row-del,
+    body.card-mode #generalScoreTable tbody button.g-row-del {
+      min-height: 40px; width: 100%; font-size: 16px !important;
+      background: #fde8e8; color: #c62828; border: 1px solid #f5c6c6; border-radius: 8px;
+    }
+    .add-heats-btn { width: 100%; min-height: 44px; font-size: 14px !important; }
+
+    /* 決賽表 / 賽程表：手機上都係橫向捲動 */
+    #table-finals1, #table-finals2 { min-width: 660px; }
+    #table-schedule { min-width: 560px; }
+    input.final-code-input, input.final-team-input, input.final-time-input, input.final-rank-input {
+      font-size: 16px !important; padding: 6px 4px !important; min-height: 40px;
+    }
+    .final-subtable-header { font-size: 13px !important; }
+
+    /* 通用計分表工具列 */
+    .general-header h1 { font-size: 17px !important; letter-spacing: 1px !important; }
+    #generalEventName { width: 100% !important; font-size: 15px !important; }
+    .general-toolbar { padding: 8px; gap: 6px; }
+    .general-toolbar .g-btn { min-height: 44px; font-size: 13px !important; padding: 10px 8px !important; flex: 1 1 45%; }
+    .general-toolbar .g-clear { margin-left: 0; }
+
+    /* 隊伍代號對照表 */
+    #tab-teams > div:first-child { flex-direction: column; align-items: stretch; }
+    #teamSearchInput { width: 100% !important; min-height: 44px; font-size: 16px !important; }
+    #tab-teams div[style*="display: grid"] { grid-template-columns: 1fr !important; gap: 14px !important; }
+    input.team-dir-code, input.team-dir-name { font-size: 16px !important; padding: 8px 6px !important; min-height: 40px; }
+    .team-dir-del { min-height: 40px; font-size: 14px; }
+
+    /* 確認 / 提示視窗 */
+    .bb-box { width: 92% !important; padding: 18px !important; font-size: 15px; }
+    .bb-msg { font-size: 15px; line-height: 1.6; white-space: pre-wrap; }
+    .bb-btns { gap: 10px; }
+    .bb-btns button { flex: 1; min-height: 46px; font-size: 16px; }
+  }
+
+  /* 列印時：解除卡片模式同橫向捲動限制 */
+  @media print {
+    .control-bar { position: static !important; }
+    .table-scroll { overflow: visible !important; }
+    #table-women, #table-mixed, #table-men, #table-finals1, #table-finals2,
+    #table-schedule, #generalScoreTable { min-width: 0 !important; }
+  }
 </style>
 </head>
 <body>
@@ -3129,16 +3307,50 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
   }
 
 
-</script>
-<script>
-  // PWA 離線快取註冊（上網安裝後自動生效；file:// 直接開唔支援離線快取）
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', function() {
-      navigator.serviceWorker.register('sw.js').catch(function(err) {
-        console.log('Service Worker 註冊失敗（file:// 模式唔支援）:', err);
-      });
+
+  // ================================================================
+  // 手機 / 平板響應式增強（V3 Mobile 新增，不影響原有功能）
+  // ================================================================
+  (function mobileEnhance() {
+    // 1) 將闊表格包入橫向捲動容器
+    ['table-women','table-mixed','table-men','table-finals1','table-finals2','table-schedule'].forEach(function(id) {
+      var t = document.getElementById(id);
+      if (!t || (t.parentNode && t.parentNode.classList && t.parentNode.classList.contains('table-scroll'))) return;
+      var w = document.createElement('div');
+      w.className = 'table-scroll';
+      t.parentNode.insertBefore(w, t);
+      w.appendChild(t);
     });
-  }
+
+    // 2) 手機卡片模式開關（≤820px 啟用）
+    function applyMobileMode() {
+      var w = window.innerWidth || document.documentElement.clientWidth;
+      document.body.classList.toggle('card-mode', w <= 820);
+    }
+    var resizeTimer = null;
+    window.addEventListener('resize', function() {
+      if (resizeTimer) clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(applyMobileMode, 150);
+    });
+    applyMobileMode();
+
+    // 3) 列印前解除卡片模式（列印後還原）
+    window.addEventListener('beforeprint', function() { document.body.classList.remove('card-mode'); });
+    window.addEventListener('afterprint', function() { applyMobileMode(); });
+
+    // 4) 切換分頁後，自動將所選分頁掣捲返可見位置
+    var origSwitchTab = window.switchTab;
+    if (typeof origSwitchTab === 'function') {
+      window.switchTab = function(tabId) {
+        var r = origSwitchTab(tabId);
+        var btn = document.querySelector('.tab-btn.active');
+        if (btn && btn.scrollIntoView) {
+          try { btn.scrollIntoView({ block: 'nearest', inline: 'nearest' }); } catch (e) { }
+        }
+        return r;
+      };
+    }
+  })();
 </script>
 </body>
 </html>
