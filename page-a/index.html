@@ -1659,20 +1659,63 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
       });
 
       input.addEventListener('keydown', function(e) {
+        // 目前時間格所屬嘅列（R1→R1、R2→R2、決賽第一輪→第一輪、決賽第二輪→第二輪）
+        const colSelector = () => {
+          if (this.classList.contains('t-r1')) return '.t-r1';
+          if (this.classList.contains('t-r2')) return '.t-r2';
+          if (this.classList.contains('final-time2-input')) return '.final-time2-input';
+          if (this.classList.contains('final-time-input')) return '.final-time-input:not(.final-time2-input)';
+          return '.time-input';
+        };
+        // 上／下：同一列跳上或跳落一行（自動跳過組別標題行）
+        const jumpSameCol = (delta) => {
+          const row = this.closest('tr');
+          const tbody = row ? row.closest('tbody') : null;
+          if (!tbody) return;
+          const rows = Array.from(tbody.querySelectorAll('tr'));
+          const idx = rows.indexOf(row);
+          const sel = colSelector();
+          const step = delta > 0 ? 1 : -1;
+          for (let i = idx + step; i >= 0 && i < rows.length; i += step) {
+            const next = rows[i].querySelector(sel);
+            if (next) { next.focus(); break; }
+          }
+        };
+        // 左／右：同一行跳去隔離時間格（R1↔R2、決賽第一輪↔第二輪）
+        const jumpHorizontal = (delta) => {
+          const row = this.closest('tr');
+          if (!row) return;
+          const inputs = Array.from(row.querySelectorAll('.time-input'));
+          const idx = inputs.indexOf(this);
+          if (idx < 0) return;
+          const next = inputs[idx + (delta > 0 ? 1 : -1)];
+          if (next) next.focus();
+        };
         if (e.key === 'Enter') {
           e.preventDefault();
           this.blur(); // Enter = 確認輸入
-          // 自動跳去下一行嘅時間格（方便連續輸入）
-          const row = this.closest('tr');
-          const tbody = row ? row.closest('tbody') : null;
-          if (tbody) {
-            const rows = Array.from(tbody.querySelectorAll('tr'));
-            const idx = rows.indexOf(row);
-            for (let i = idx + 1; i < rows.length; i++) {
-              const next = rows[i].querySelector('.time-input, .g-time');
-              if (next) { next.focus(); break; }
-            }
-          }
+          jumpSameCol(1);
+        } else if (e.key === 'Delete') {
+          e.preventDefault();
+          this.value = ''; // Delete = 取消：清空當前時間格
+          this.blur();
+          jumpSameCol(1);
+        } else if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          this.blur();
+          jumpSameCol(1);
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          this.blur();
+          jumpSameCol(-1);
+        } else if (e.key === 'ArrowRight') {
+          e.preventDefault();
+          this.blur();
+          jumpHorizontal(1);
+        } else if (e.key === 'ArrowLeft') {
+          e.preventDefault();
+          this.blur();
+          jumpHorizontal(-1);
         }
       });
 
@@ -2585,6 +2628,43 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
     });
   }
 
+  // 自製確認視窗：回傳 Promise<boolean>（Enter／按「確定」= true，Esc／按「取消」= false）
+  function showConfirmDialog(message, okText = '確定', cancelText = '取消') {
+    return new Promise(resolve => {
+      const overlay = document.createElement('div');
+      overlay.className = 'bb-overlay';
+      overlay.innerHTML =
+        '<div class="bb-box">' +
+          '<div class="bb-msg"></div>' +
+          '<div class="bb-btns">' +
+            '<button type="button" class="bb-cancel"></button>' +
+            '<button type="button" class="bb-ok"></button>' +
+          '</div>' +
+        '</div>';
+      overlay.querySelector('.bb-msg').textContent = message;
+      overlay.querySelector('.bb-ok').textContent = okText;
+      overlay.querySelector('.bb-cancel').textContent = cancelText;
+      document.body.appendChild(overlay);
+
+      const okBtn = overlay.querySelector('.bb-ok');
+      const cancelBtn = overlay.querySelector('.bb-cancel');
+      const cleanup = (result) => {
+        document.removeEventListener('keydown', onKey);
+        if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
+        resolve(result);
+      };
+      const onKey = (e) => {
+        if (e.key === 'Enter') { e.preventDefault(); cleanup(true); }
+        else if (e.key === 'Escape') { e.preventDefault(); cleanup(false); }
+      };
+      okBtn.addEventListener('click', () => cleanup(true));
+      cancelBtn.addEventListener('click', () => cleanup(false));
+      overlay.addEventListener('click', (e) => { if (e.target === overlay) cleanup(false); });
+      document.addEventListener('keydown', onKey);
+      okBtn.focus();
+    });
+  }
+
   // 總決賽時間／最終名次（General → 決賽表，按編號匹配）
   function syncGeneralToFinals() {
     const finMap = {};
@@ -2645,20 +2725,62 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
       });
 
       input.addEventListener('keydown', function(e) {
+        // 判斷當前係邊一列時間（R1→R1、R2→R2、總決賽時間→總決賽時間）
+        const colSelector = () => {
+          if (this.classList.contains('g-r1')) return '.g-r1';
+          if (this.classList.contains('g-r2')) return '.g-r2';
+          if (this.classList.contains('g-fintime')) return '.g-fintime';
+          return '.g-time';
+        };
+        // 上／下：同一列跳上或跳落一行
+        const jumpSameCol = (delta) => {
+          const row = this.closest('tr');
+          const tbody = row ? row.closest('tbody') : null;
+          if (!tbody) return;
+          const rows = Array.from(tbody.querySelectorAll('tr'));
+          const idx = rows.indexOf(row);
+          const sel = colSelector();
+          const step = delta > 0 ? 1 : -1;
+          for (let i = idx + step; i >= 0 && i < rows.length; i += step) {
+            const next = rows[i].querySelector(sel);
+            if (next) { next.focus(); break; }
+          }
+        };
+        // 左／右：同一行跳去隔離時間格（R1↔R2↔總決賽時間）
+        const jumpHorizontal = (delta) => {
+          const row = this.closest('tr');
+          if (!row) return;
+          const inputs = Array.from(row.querySelectorAll('.g-time'));
+          const idx = inputs.indexOf(this);
+          if (idx < 0) return;
+          const next = inputs[idx + (delta > 0 ? 1 : -1)];
+          if (next) next.focus();
+        };
         if (e.key === 'Enter') {
           e.preventDefault();
           this.blur(); // Enter = 確認輸入
-          // 自動跳去下一行嘅時間格（方便連續輸入）
-          const row = this.closest('tr');
-          const tbody = row ? row.closest('tbody') : null;
-          if (tbody) {
-            const rows = Array.from(tbody.querySelectorAll('tr'));
-            const idx = rows.indexOf(row);
-            for (let i = idx + 1; i < rows.length; i++) {
-              const next = rows[i].querySelector('.time-input, .g-time');
-              if (next) { next.focus(); break; }
-            }
-          }
+          jumpSameCol(1);
+        } else if (e.key === 'Delete') {
+          e.preventDefault();
+          this.value = ''; // 取消：清空當前時間格
+          this.blur();
+          jumpSameCol(1);
+        } else if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          this.blur();
+          jumpSameCol(1);
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          this.blur();
+          jumpSameCol(-1);
+        } else if (e.key === 'ArrowRight') {
+          e.preventDefault();
+          this.blur();
+          jumpHorizontal(1);
+        } else if (e.key === 'ArrowLeft') {
+          e.preventDefault();
+          this.blur();
+          jumpHorizontal(-1);
         }
       });
 
