@@ -345,7 +345,7 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
       padding: 4px 4px !important;
       border: 1px solid #c09aa8 !important;
     }
-    input.time-input, input.final-code-input, input.final-team-input, input.final-rank-input {
+    input.time-input, input.final-code-input, input.final-team-input, input.final-rank-input, input.final-heats-input {
       border: none !important;
       background: transparent !important;
       box-shadow: none !important;
@@ -575,11 +575,12 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
     }
 
     /* 決賽表 / 賽程表：手機上橫向捲動 */
-    #table-finals1, #table-finals2 { min-width: 660px; }
+    #table-finals1, #table-finals2 { min-width: 800px; }
     #table-schedule { min-width: 560px; }
-    input.final-code-input, input.final-team-input, input.final-time-input, input.final-rank-input {
+    input.final-code-input, input.final-team-input, input.final-time-input, input.final-rank-input, input.final-heats-input {
       font-size: 16px !important; padding: 6px 4px !important; min-height: 40px;
     }
+    input.final-heats-input { color: #0b7285 !important; font-weight: bold !important; }
     .final-subtable-header { font-size: 13px !important; }
 
     /* 隊伍代號對照表 */
@@ -746,6 +747,11 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
     <button class="json-btn import-json-btn" onclick="document.getElementById('jsonFileInput').click()" style="background:#5c7cfa;color:#fff;border:none;padding:10px 14px;border-radius:4px;font-size:14px;font-weight:bold;cursor:pointer;display:inline-flex;align-items:center;gap:6px;box-shadow:0 2px 5px rgba(0,0,0,0.2);">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
       匯入 JSON 備份
+    </button>
+
+    <button class="json-btn restore-json-btn" onclick="restoreFromStorage()" style="background:#12b886;color:#fff;border:none;padding:10px 14px;border-radius:4px;font-size:14px;font-weight:bold;cursor:pointer;display:inline-flex;align-items:center;gap:6px;box-shadow:0 2px 5px rgba(0,0,0,0.2);">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"></path><polyline points="3 3 3 8 8 8"></polyline></svg>
+      還原自動備份
     </button>
     <input type="file" id="jsonFileInput" accept=".json" style="display:none;" onchange="importJSON(event)">
 
@@ -1115,7 +1121,11 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
           <th style="width: 8%;">線道 Lane</th>
           <th style="width: 10%;">編號 Code</th>
           <th style="width: 31%;">隊名 Teams Name</th>
+<<<<<<< HEAD
+          <th style="width: 11%;">初賽成績</th>           <th style="width: 11%;">總決賽時間</th>           <th style="width: 10%;">合計</th>
+=======
           <th style="width: 11%;">第一輪</th>           <th style="width: 10%;">第二輪</th>           <th style="width: 10%;">合計</th>
+>>>>>>> 95735457cd1874ddb32769fe1c82f74fae6219b7
           <th style="width: 9%;">名次</th>
         </tr>
       </thead>
@@ -1126,12 +1136,21 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
             飛雁洞佛道社 混合組銀碗決賽 &nbsp;&nbsp;&nbsp; SILVER BOWL FINAL (MIXED'S)
           </th>
         </tr>
+<<<<<<< HEAD
+        <tr><td rowspan="6" class="race-time-cell">比賽時間<br>Time<br>13:00</td><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+=======
         <tr><td rowspan="6" class="race-time-cell">比賽時間<br>Time<br>13:00</td><td>1</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>2</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>3</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>4</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>5</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>6</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+>>>>>>> 95735457cd1874ddb32769fe1c82f74fae6219b7
 
         <!-- 天和工程有限公司 男子組銀碗決賽 SILVER BOWL FINAL (Men's) 13:07 -->
         <tr class="group-header" data-race="men_silver_bowl">
@@ -1139,12 +1158,21 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
             天和工程有限公司 男子組銀碗決賽 &nbsp;&nbsp;&nbsp; SILVER BOWL FINAL (Men's)
           </th>
         </tr>
+<<<<<<< HEAD
+        <tr><td rowspan="6" class="race-time-cell">比賽時間<br>Time<br>13:07</td><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+=======
         <tr><td rowspan="6" class="race-time-cell">比賽時間<br>Time<br>13:07</td><td>1</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>2</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>3</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>4</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>5</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>6</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+>>>>>>> 95735457cd1874ddb32769fe1c82f74fae6219b7
 
         <!-- 津偉集團有限公司 混合組銀碟決賽 SILVER PLATE FINAL (MIXED'S) 13:14 -->
         <tr class="group-header" data-race="mixed_silver_plate">
@@ -1152,12 +1180,21 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
             津偉集團有限公司 混合組銀碟決賽 &nbsp;&nbsp;&nbsp; SILVER PLATE FINAL (MIXED'S)
           </th>
         </tr>
+<<<<<<< HEAD
+        <tr><td rowspan="6" class="race-time-cell">比賽時間<br>Time<br>13:14</td><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+=======
         <tr><td rowspan="6" class="race-time-cell">比賽時間<br>Time<br>13:14</td><td>1</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>2</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>3</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>4</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>5</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>6</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+>>>>>>> 95735457cd1874ddb32769fe1c82f74fae6219b7
 
         <!-- 滙信建築工程有限公司 男子組銀碟決賽 SILVER PLATE FINAL (Men's) 13:21 -->
         <tr class="group-header" data-race="men_silver_plate">
@@ -1165,12 +1202,21 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
             滙信建築工程有限公司 男子組銀碟決賽 &nbsp;&nbsp;&nbsp; SILVER PLATE FINAL (Men's)
           </th>
         </tr>
+<<<<<<< HEAD
+        <tr><td rowspan="6" class="race-time-cell">比賽時間<br>Time<br>13:21</td><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+=======
         <tr><td rowspan="6" class="race-time-cell">比賽時間<br>Time<br>13:21</td><td>1</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>2</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>3</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>4</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>5</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>6</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+>>>>>>> 95735457cd1874ddb32769fe1c82f74fae6219b7
 
         <!-- 香港機場管理局 混合組銀盃決賽 SILVER CUP FINAL (MIXED'S) 13:28 -->
         <tr class="group-header" data-race="mixed_silver_cup">
@@ -1178,12 +1224,21 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
             香港機場管理局 混合組銀盃決賽 &nbsp;&nbsp;&nbsp; SILVER CUP FINAL (MIXED'S)
           </th>
         </tr>
+<<<<<<< HEAD
+        <tr><td rowspan="6" class="race-time-cell">比賽時間<br>Time<br>13:28</td><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+=======
         <tr><td rowspan="6" class="race-time-cell">比賽時間<br>Time<br>13:28</td><td>1</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>2</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>3</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>4</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>5</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>6</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+>>>>>>> 95735457cd1874ddb32769fe1c82f74fae6219b7
 
         <!-- 三馬香港有限公司 男子組銀盃決賽 SILVER CUP FINAL (Men's) 13:35 -->
         <tr class="group-header" data-race="men_silver_cup">
@@ -1191,12 +1246,21 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
             三馬香港有限公司 男子組銀盃決賽 &nbsp;&nbsp;&nbsp; SILVER CUP FINAL (Men's)
           </th>
         </tr>
+<<<<<<< HEAD
+        <tr><td rowspan="6" class="race-time-cell">比賽時間<br>Time<br>13:35</td><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+=======
         <tr><td rowspan="6" class="race-time-cell">比賽時間<br>Time<br>13:35</td><td>1</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>2</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>3</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>4</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>5</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>6</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+>>>>>>> 95735457cd1874ddb32769fe1c82f74fae6219b7
 
         <!-- 銀鑛灣渡假酒店 混合組金碗決賽 GOLD BOWL FINAL (MIXED'S) 13:42 -->
         <tr class="group-header" data-race="mixed_gold_bowl">
@@ -1204,12 +1268,21 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
             銀鑛灣渡假酒店 混合組金碗決賽 &nbsp;&nbsp;&nbsp; GOLD BOWL FINAL (MIXED'S)
           </th>
         </tr>
+<<<<<<< HEAD
+        <tr><td rowspan="6" class="race-time-cell">比賽時間<br>Time<br>13:42</td><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+=======
         <tr><td rowspan="6" class="race-time-cell">比賽時間<br>Time<br>13:42</td><td>1</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>2</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>3</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>4</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>5</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>6</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+>>>>>>> 95735457cd1874ddb32769fe1c82f74fae6219b7
       </tbody>
     </table>
   </div>
@@ -1223,7 +1296,11 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
           <th style="width: 8%;">線道 Lane</th>
           <th style="width: 10%;">編號 Code</th>
           <th style="width: 31%;">隊名 Teams Name</th>
+<<<<<<< HEAD
+          <th style="width: 11%;">初賽成績</th>           <th style="width: 11%;">總決賽時間</th>           <th style="width: 10%;">合計</th>
+=======
           <th style="width: 11%;">第一輪</th>           <th style="width: 10%;">第二輪</th>           <th style="width: 10%;">合計</th>
+>>>>>>> 95735457cd1874ddb32769fe1c82f74fae6219b7
           <th style="width: 9%;">名次</th>
         </tr>
       </thead>
@@ -1234,12 +1311,21 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
             袁華照紀念基金 男子組金碗決賽 &nbsp;&nbsp;&nbsp; GOLD BOWL FINAL (Men's)
           </th>
         </tr>
+<<<<<<< HEAD
+        <tr><td rowspan="6" class="race-time-cell">比賽時間<br>Time<br>13:49</td><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+=======
         <tr><td rowspan="6" class="race-time-cell">比賽時間<br>Time<br>13:49</td><td>1</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>2</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>3</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>4</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>5</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>6</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+>>>>>>> 95735457cd1874ddb32769fe1c82f74fae6219b7
 
         <!-- 離島區體育會 女子組金碟決賽 GOLD PLATE FINAL (WOMEN'S) 13:56 -->
         <tr class="group-header" data-race="women_gold_plate">
@@ -1247,12 +1333,21 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
             離島區體育會 女子組金碟決賽 &nbsp;&nbsp;&nbsp; GOLD PLATE FINAL (WOMEN'S)
           </th>
         </tr>
+<<<<<<< HEAD
+        <tr><td rowspan="6" class="race-time-cell">比賽時間<br>Time<br>13:56</td><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+=======
         <tr><td rowspan="6" class="race-time-cell">比賽時間<br>Time<br>13:56</td><td>1</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>2</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>3</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>4</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>5</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>6</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+>>>>>>> 95735457cd1874ddb32769fe1c82f74fae6219b7
 
         <!-- 雅士梅窩診所 混合組金碟決賽 GOLD PLATE FINAL (MIXED'S) 14:03 -->
         <tr class="group-header" data-race="mixed_gold_plate">
@@ -1260,12 +1355,21 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
             雅士梅窩診所 混合組金碟決賽 &nbsp;&nbsp;&nbsp; GOLD PLATE FINAL (MIXED'S)
           </th>
         </tr>
+<<<<<<< HEAD
+        <tr><td rowspan="6" class="race-time-cell">比賽時間<br>Time<br>14:03</td><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+=======
         <tr><td rowspan="6" class="race-time-cell">比賽時間<br>Time<br>14:03</td><td>1</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>2</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>3</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>4</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>5</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>6</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+>>>>>>> 95735457cd1874ddb32769fe1c82f74fae6219b7
 
         <!-- 圓玄學院 男子組金碟決賽 GOLD PLATE FINAL (Men's) 14:10 -->
         <tr class="group-header" data-race="men_gold_plate">
@@ -1273,12 +1377,21 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
             圓玄學院 男子組金碟決賽 &nbsp;&nbsp;&nbsp; GOLD PLATE FINAL (Men's)
           </th>
         </tr>
+<<<<<<< HEAD
+        <tr><td rowspan="6" class="race-time-cell">比賽時間<br>Time<br>14:10</td><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+=======
         <tr><td rowspan="6" class="race-time-cell">比賽時間<br>Time<br>14:10</td><td>1</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>2</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>3</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>4</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>5</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>6</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+>>>>>>> 95735457cd1874ddb32769fe1c82f74fae6219b7
 
         <!-- 香港離島工商業聯合總會 女子組金盃決賽 GOLD CUP FINAL (WOMEN'S) 14:17 -->
         <tr class="group-header" data-race="women_gold_cup">
@@ -1286,12 +1399,21 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
             香港離島工商業聯合總會 女子組金盃決賽 &nbsp;&nbsp;&nbsp; GOLD CUP FINAL (WOMEN'S)
           </th>
         </tr>
+<<<<<<< HEAD
+        <tr><td rowspan="6" class="race-time-cell">比賽時間<br>Time<br>14:17</td><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+=======
         <tr><td rowspan="6" class="race-time-cell">比賽時間<br>Time<br>14:17</td><td>1</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>2</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>3</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>4</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>5</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>6</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+>>>>>>> 95735457cd1874ddb32769fe1c82f74fae6219b7
 
         <!-- 新渡輪服務有限公司 混合組金盃決賽 GOLD CUP FINAL (MIXED'S) 14:24 -->
         <tr class="group-header" data-race="mixed_gold_cup">
@@ -1299,12 +1421,21 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
             新渡輪服務有限公司 混合組金盃決賽 &nbsp;&nbsp;&nbsp; GOLD CUP FINAL (MIXED'S)
           </th>
         </tr>
+<<<<<<< HEAD
+        <tr><td rowspan="6" class="race-time-cell">比賽時間<br>Time<br>14:24</td><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+=======
         <tr><td rowspan="6" class="race-time-cell">比賽時間<br>Time<br>14:24</td><td>1</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>2</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>3</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>4</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>5</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>6</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+>>>>>>> 95735457cd1874ddb32769fe1c82f74fae6219b7
 
         <!-- 新界鄉議局100周年 男子組金盃決賽 GOLD CUP FINAL (Men's) 14:31 -->
         <tr class="group-header" data-race="men_gold_cup">
@@ -1312,12 +1443,21 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
             新界鄉議局100周年 男子組金盃決賽 &nbsp;&nbsp;&nbsp; GOLD CUP FINAL (Men's)
           </th>
         </tr>
+<<<<<<< HEAD
+        <tr><td rowspan="6" class="race-time-cell">比賽時間<br>Time<br>14:31</td><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+        <tr><td><span class="final-lane-cell" style="display:inline-block;width:30px;text-align:center;font-weight:bold;">-</span></td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="final-heats-input" placeholder="初賽成績" style="width:90px;text-align:center;font-weight:bold;color:#0b7285;" readonly></td><td><input type="text" class="time-input final-time-input" placeholder="總決賽時間" maxlength="11"></td><td><span class="final-total-cell" style="display:inline-block;width:70px;text-align:center;font-weight:bold;color:#198754;">-</span></td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+=======
         <tr><td rowspan="6" class="race-time-cell">比賽時間<br>Time<br>14:31</td><td>1</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>2</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>3</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>4</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>5</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
         <tr><td>6</td><td><input type="text" class="final-code-input" placeholder="如 X01" style="width:70px;text-align:center;font-weight:bold;text-transform:uppercase;"></td><td><input type="text" class="final-team-input" placeholder="輸入代號自動顯示隊名" style="width:92%;"></td><td><input type="text" class="time-input final-time-input" placeholder="mm:ss.SSS" maxlength="11"></td><td><input type="text" class="time-input final-time-input final-time2-input" placeholder="mm:ss.SSS" maxlength="11"></td><td class="final-total-cell" style="text-align:center; font-weight:bold; white-space:nowrap;">-</td><td><input type="text" class="final-rank-input" placeholder="名次" style="width:50px;text-align:center;font-weight:bold;color:#b02a37;"></td></tr>
+>>>>>>> 95735457cd1874ddb32769fe1c82f74fae6219b7
       </tbody>
     </table>
   </div>
@@ -1655,7 +1795,12 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
         // 輸入途中唔自動排版（避免中途變形搞亂數字），統一喺離開輸入格時格式化
         limitTimeDigits(this);
         updateRowTotal(this.closest('tr'));
-        autoSeedFinals(false);
+        // 淨係初賽時間格（t-r1/t-r2）先會觸發「自動晉級總決賽」；
+        // 決賽時間格（final-time-input）唔會——否則一打字就會俾初賽成績覆蓋，手動改唔到第一輪時間
+        if (!this.classList.contains('final-time-input')) {
+          autoSeedFinals(false);
+          refreshAllFinalTotals(); // 初賽成績變動 → 全部決賽合計（含初賽）即時重算
+        }
       });
 
       input.addEventListener('keydown', function(e) {
@@ -1741,7 +1886,12 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
           }
         }
         updateRowTotal(this.closest('tr'));
-        autoSeedFinals(false);
+        // 淨係初賽時間格（t-r1/t-r2）先會觸發「自動晉級總決賽」；
+        // 決賽時間格（final-time-input）唔會——否則一打字就會俾初賽成績覆蓋，手動改唔到第一輪時間
+        if (!this.classList.contains('final-time-input')) {
+          autoSeedFinals(false);
+          refreshAllFinalTotals(); // 初賽成績變動 → 全部決賽合計（含初賽）即時重算
+        }
       });
     });
   }
@@ -2134,6 +2284,9 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
             teamInput.style.backgroundColor = '';
           }
         }
+        // 編號確定後，重新計算合計（會自動加埋初賽成績）及名次
+        updateFinalRowTotal(row);
+        updateFinalSubTableRank(row);
       });
     });
   }
@@ -2229,10 +2382,17 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
           teamInput.value = laneTeam.team;
           teamInput.style.backgroundColor = '#e8f5e9'; // 淺綠色標示自動跳入
         }
-        if (timeInput && (!timeInput.value || timeInput.dataset.fromHeats === "true")) {
-          timeInput.value = laneTeam.formattedTotal; // 初賽合計成績自動帶入
-          timeInput.dataset.fromHeats = "true";
-          timeInput.style.backgroundColor = '#f1f8ff';
+        // 初賽成績顯示喺「初賽」欄（參考用，唔計入合計）
+        let heatsInput = r.querySelector('.final-heats-input');
+        if (heatsInput) {
+          heatsInput.value = laneTeam.formattedTotal;
+          heatsInput.dataset.fromHeats = "true";
+        }
+        // 若舊版自動晉級曾將初賽合計填入決賽第一輪（fromHeats=true），清走以免當成決賽時間
+        if (timeInput && timeInput.dataset.fromHeats === "true") {
+          timeInput.value = '';
+          timeInput.dataset.fromHeats = '';
+          timeInput.style.backgroundColor = '';
         }
         if (rankInput && (!rankInput.value || rankInput.dataset.fromHeats === "true")) {
           rankInput.value = laneTeam.groupRank; // 帶入初賽排位名次 (1-6)
@@ -2243,6 +2403,99 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
     });
   }
 
+<<<<<<< HEAD
+  // 初賽成績變動後，重新計算全部決賽行合計及名次（因為合計包含初賽成績）
+  function refreshAllFinalTotals() {
+    document.querySelectorAll('.final-code-input').forEach(inp => {
+      const row = inp.closest('tr');
+      if (!row) return;
+      updateFinalRowTotal(row);
+      updateFinalSubTableRank(row);
+    });
+  }
+
+  // 按編號搵初賽嗰隊嘅合計成績（毫秒）；搵唔到返 null
+  function getHeatsTotalByCode(code) {
+    if (!code) return null;
+    const target = String(code).trim().toUpperCase();
+    for (const tableId of ['table-women', 'table-mixed', 'table-men']) {
+      let table = document.getElementById(tableId);
+      if (!table) continue;
+      let found = null;
+      table.querySelectorAll('tbody tr').forEach(row => {
+        if (found !== null) return;
+        let codeCell = row.cells[row.cells.length === 8 ? 1 : 0]; // handle rowspan
+        if (!codeCell) return;
+        if (codeCell.innerText.trim().toUpperCase() === target) {
+          let totalCell = row.querySelector('.total-cell');
+          if (totalCell) found = parseMilliseconds(totalCell.innerText.trim());
+        }
+      });
+      if (found !== null) return found;
+    }
+    return null;
+  }
+
+  // 更新決賽行：初賽成績顯示（參考用）+ 合計 + 名次 + 線道
+  // 合計 = 總決賽時間（初賽時間唔會計入）；名次按總決賽時間排（唔計初賽）
+  function updateFinalRowTotal(row) {
+    if (!row) return;
+    // 初賽成績顯示（參考用）
+    let codeInput = row.querySelector('.final-code-input');
+    let heatsInput = row.querySelector('.final-heats-input');
+    if (heatsInput) {
+      let heatsMs = codeInput ? getHeatsTotalByCode(codeInput.value) : null;
+      heatsInput.value = heatsMs !== null ? formatTimeMS(heatsMs) : '';
+    }
+    // 合計欄：自動顯示總決賽時間（初賽唔計入）
+    let t1 = row.querySelector('.final-time-input');
+    let totalCell = row.querySelector('.final-total-cell');
+    if (totalCell) {
+      let s1 = t1 ? parseMilliseconds(t1.value) : null;
+      totalCell.textContent = s1 !== null ? formatTimeMS(s1) : '-';
+    }
+    // 線道自動產生：按初賽成績排名分配（最快 → 中間道）
+    let hdr = row;
+    while (hdr && !hdr.classList.contains('group-header')) hdr = hdr.previousElementSibling;
+    if (hdr && hdr.getAttribute('data-race')) {
+      updateFinalLane(hdr.getAttribute('data-race'));
+    }
+    updateFinalSubTableRank(row);
+  }
+
+  // 線道自動產生：同一決賽組內，按初賽成績排名（快 → 慢），
+  // 第 1 名放第 3 道、第 2 名放第 4 道、第 3 名放第 2 道、第 4 名放第 5 道、
+  // 第 5 名放第 1 道、第 6 名放第 6 道（SEED_LANES）；冇初賽成績嘅隊留空等手動排。
+  function updateFinalLane(raceKey) {
+    let headerTr = document.querySelector(`tr[data-race="${raceKey}"]`);
+    if (!headerTr) return;
+    let rows = [];
+    let cur = headerTr.nextElementSibling;
+    for (let i = 0; i < 6 && cur; i++) {
+      rows.push(cur);
+      cur = cur.nextElementSibling;
+    }
+    // 收集有編號且有初賽成績嘅隊
+    let entries = [];
+    rows.forEach(row => {
+      let codeEl = row.querySelector('.final-code-input');
+      let code = codeEl ? codeEl.value.trim() : '';
+      if (!code) return;
+      let ms = getHeatsTotalByCode(code);
+      if (ms !== null) entries.push({ row, ms });
+    });
+    // 清空所有線道
+    rows.forEach(row => {
+      let laneCell = row.querySelector('.final-lane-cell');
+      if (laneCell) laneCell.textContent = '';
+    });
+    // 按初賽成績快→慢排名，分配標準線道
+    entries.sort((a, b) => a.ms - b.ms);
+    entries.forEach((e, rankIdx) => {
+      let laneCell = e.row.querySelector('.final-lane-cell');
+      if (laneCell) laneCell.textContent = String(SEED_LANES[rankIdx]);
+    });
+=======
   // 監聽總決賽時間輸入，自動計算決賽名次 (1至6名)
   // 決賽合計：第一輪 + 第二輪（冇第二輪就單計第一輪）
   function updateFinalRowTotal(row) {
@@ -2258,6 +2511,7 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
     else if (s1 !== null) ms = s1;
     else if (s2 !== null) ms = s2;
     totalCell.textContent = ms !== null ? formatTimeMS(ms) : '-';
+>>>>>>> 95735457cd1874ddb32769fe1c82f74fae6219b7
   }
 
   function setupFinalsAutoRank() {
@@ -2266,11 +2520,17 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
         this.dataset.fromHeats = "false"; // 使用者已自行輸入決賽時間
         this.style.backgroundColor = '#fff';
         updateFinalRowTotal(this.closest('tr'));
+<<<<<<< HEAD
+      });
+      input.addEventListener('blur', function() {
+        updateFinalRowTotal(this.closest('tr'));
+=======
         updateFinalSubTableRank(this.closest('tr'));
       });
       input.addEventListener('blur', function() {
         updateFinalRowTotal(this.closest('tr'));
         updateFinalSubTableRank(this.closest('tr'));
+>>>>>>> 95735457cd1874ddb32769fe1c82f74fae6219b7
       });
     });
   }
@@ -2302,6 +2562,11 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
     let entries = [];
     rows.forEach((row, idx) => {
       let t1 = row.querySelector('.final-time-input');
+<<<<<<< HEAD
+      let s1 = t1 ? parseMilliseconds(t1.value) : null;
+      // 名次按「總決賽時間」單獨計時（初賽成績唔計）
+      entries.push({ row, sec: s1, originalIdx: idx });
+=======
       let t2 = row.querySelector('.final-time2-input');
       let s1 = t1 ? parseMilliseconds(t1.value) : null;
       let s2 = t2 ? parseMilliseconds(t2.value) : null;
@@ -2310,6 +2575,7 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
       else if (s1 !== null) sec = s1;
       else if (s2 !== null) sec = s2;
       entries.push({ row, sec, originalIdx: idx });
+>>>>>>> 95735457cd1874ddb32769fe1c82f74fae6219b7
     });
 
     // 排序有成績者
@@ -2361,7 +2627,7 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
     fillFinalRace('men_silver_bowl', men.slice(30, 36));
 
     if (showAlert) {
-      alert(`✅ 已成功將初賽成績自動晉級總決賽！\n\n包含：\n1. 參賽隊伍代號及中文隊名\n2. 初賽合計成績（時間）\n3. 初賽排位名次（1 至 6 名）\n4. 自動依龍舟標準中心航道（3、4 道最優）編配！\n\n決賽進行時若填入新時間，系統亦會自動重算決賽最終名次。`);
+      alert(`✅ 已成功將初賽成績自動晉級總決賽！\n\n包含：\n1. 參賽隊伍代號及中文隊名\n2. 初賽成績（顯示喺「初賽成績」欄，僅供參考，唔計入排名）\n3. 初賽排位名次（1 至 6 名）\n4. 自動依龍舟標準中心航道（3、4 道最優）編配！\n\n喺「總決賽時間」欄輸入時間後，名次會自動按總決賽時間重算。`);
     }
   }
 
@@ -2396,8 +2662,8 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
   }
 
 
-  // JSON 備份匯出功能
-  function exportJSON() {
+  // 組合全部備份資料（初賽 + 決賽 + 通用計分表）
+  function buildBackupData() {
     let backupData = {
       version: "2026.1",
       exportTime: new Date().toISOString(),
@@ -2406,38 +2672,52 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
       finals: {}
     };
 
-    // 1. 初賽成績提取
+    // 1. 初賽成績提取（完整記錄：場次、隊名、線道、兩輪時間、合計）
     ['table-women', 'table-mixed', 'table-men'].forEach(tblId => {
       let tbl = document.getElementById(tblId);
       if (!tbl) return;
       tbl.querySelectorAll('tbody tr').forEach(row => {
-        let codeCell = row.cells[row.cells.length === 8 ? 1 : 0];
+        let codeIdx = row.cells.length === 8 ? 1 : 0;
+        let codeCell = row.cells[codeIdx];
         if (!codeCell) return;
         let code = codeCell.innerText.trim();
         if (code && code.match(/^[LXM]\d+/)) {
-          let r1 = row.querySelector('.t-r1') ? row.querySelector('.t-r1').value.trim() : '';
-          let r2 = row.querySelector('.t-r2') ? row.querySelector('.t-r2').value.trim() : '';
-          backupData.heats[code] = { r1: r1, r2: r2 };
+          let race = row.cells.length === 8 ? row.cells[0].innerText.trim() : '';
+          let teamCell = row.querySelector('.team-cell');
+          let getVal = (el) => { return el ? (el.value !== undefined ? el.value.trim() : el.innerText.trim()) : ''; };
+          backupData.heats[code] = {
+            code: code,
+            race: race,
+            team: teamCell ? teamCell.innerText.trim() : '',
+            lane1: row.cells[codeIdx + 2] ? row.cells[codeIdx + 2].innerText.trim() : '',
+            r1: getVal(row.querySelector('.t-r1')),
+            lane2: row.cells[codeIdx + 4] ? row.cells[codeIdx + 4].innerText.trim() : '',
+            r2: getVal(row.querySelector('.t-r2')),
+            total: getVal(row.querySelector('.total-cell'))
+          };
         }
       });
     });
 
-    // 2. 總決賽輸入提取
+    // 2. 總決賽輸入提取（完整讀取所有線道，唔限死 6 線）
     document.querySelectorAll('.group-header[data-race]').forEach(header => {
       let raceKey = header.getAttribute('data-race');
       backupData.finals[raceKey] = [];
       let cur = header.nextElementSibling;
-      for (let i = 0; i < 6 && cur; i++) {
+      let lane = 1;
+      while (cur && !cur.classList.contains('group-header')) {
         let codeInput = cur.querySelector('.final-code-input');
         let teamInput = cur.querySelector('.final-team-input');
         let timeInput = cur.querySelector('.final-time-input');
         let time2Input = cur.querySelector('.final-time2-input');
         let totalCell = cur.querySelector('.final-total-cell');
         let rankInput = cur.querySelector('.final-rank-input');
+        let heatsInput = cur.querySelector('.final-heats-input');
         backupData.finals[raceKey].push({
-          lane: i + 1,
+          lane: lane++,
           code: codeInput ? codeInput.value.trim() : '',
           team: teamInput ? teamInput.value.trim() : '',
+          heats: heatsInput ? heatsInput.value.trim() : '',
           time: timeInput ? timeInput.value.trim() : '',
           time2: time2Input ? time2Input.value.trim() : '',
           total: totalCell ? totalCell.textContent.trim() : '',
@@ -2463,15 +2743,75 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
       });
     });
 
+<<<<<<< HEAD
+    return backupData;
+  }
+
+  // JSON 備份匯出功能
+  function exportJSON() {
+    let backupData = buildBackupData();
+
+    // 1) 先自動備份到本機（localStorage）——就算下載唔到都唔會冇咗資料
+    let jsonStr = JSON.stringify(backupData, null, 2);
+    try { localStorage.setItem('muiwo_score_autobackup', jsonStr); } catch(e) {}
+
+    // 2) 嘗試下載 .json 檔
+=======
     // 建立下載
     let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(backupData, null, 2));
     let downloadAnchor = document.createElement('a');
+>>>>>>> 95735457cd1874ddb32769fe1c82f74fae6219b7
     let nowStr = new Date().toISOString().slice(0,19).replace(/[:T]/g, "_");
-    downloadAnchor.setAttribute("href", dataStr);
-    downloadAnchor.setAttribute("download", `梅窩小龍公開賽_計分備份_${nowStr}.json`);
-    document.body.appendChild(downloadAnchor);
-    downloadAnchor.click();
-    downloadAnchor.remove();
+    let filename = `梅窩小龍公開賽_計分備份_${nowStr}.json`;
+    downloadJSONFile(filename, jsonStr);
+
+    // 3) 彈出可複製／可下載嘅備份視窗，確保「備份到」
+    showBackupDialog(filename, jsonStr);
+  }
+
+  // 獨立下載 JSON 檔（Blob + object URL；舊版 Edge 用 msSaveBlob）
+  function downloadJSONFile(filename, text) {
+    try {
+      const blob = new Blob([text], { type: 'application/json;charset=utf-8' });
+      if (window.navigator && window.navigator.msSaveBlob) { window.navigator.msSaveBlob(blob, filename); return; }
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => { try { URL.revokeObjectURL(url); } catch(e){} }, 1000);
+    } catch(e) { /* 由彈出視窗兜底 */ }
+  }
+
+  // 備份結果視窗：顯示 JSON + 提供「下載」同「複製」按鈕（喺任何瀏覽器都保證備份到）
+  function showBackupDialog(filename, jsonStr) {
+    const overlay = document.createElement('div');
+    overlay.className = 'bb-overlay';
+    overlay.innerHTML =
+      '<div class="bb-box" style="max-width:94%;width:580px;">' +
+        '<div class="bb-msg" style="font-weight:bold;font-size:15px;margin:0 0 4px 0;">📦 備份已完成</div>' +
+        '<div class="bb-msg" style="font-size:12px;color:#666;margin:0 0 8px 0;">資料已自動儲存到本機。若瀏覽器冇自動彈出下載，請用下面按鈕手動保存。</div>' +
+        '<textarea readonly class="bb-json" style="width:100%;height:190px;font-family:monospace;font-size:11px;box-sizing:border-box;white-space:pre;overflow:auto;"></textarea>' +
+        '<div class="bb-btns">' +
+          '<button type="button" class="bb-cancel">⬇ 下載 .json</button>' +
+          '<button type="button" class="bb-ok">📋 複製內容</button>' +
+        '</div>' +
+      '</div>';
+    const ta = overlay.querySelector('.bb-json');
+    ta.value = jsonStr;
+    const close = () => { if (overlay.parentNode) overlay.parentNode.removeChild(overlay); };
+    overlay.querySelector('.bb-cancel').addEventListener('click', () => { downloadJSONFile(filename, jsonStr); });
+    overlay.querySelector('.bb-ok').addEventListener('click', () => {
+      ta.removeAttribute('readonly');
+      ta.focus(); ta.select(); ta.setSelectionRange(0, ta.value.length);
+      let ok = false;
+      try { ok = document.execCommand('copy'); } catch(e) {}
+      if (ok) { alert('✅ 已複製到剪貼簿'); } else { alert('請喺文字框內長按／全選，再複製內容。'); }
+    });
+    overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
+    document.body.appendChild(overlay);
   }
 
   // JSON 備份匯入功能
@@ -2493,24 +2833,11 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
           return;
         }
 
-        // 1. 恢復初賽成績
-        ['table-women', 'table-mixed', 'table-men'].forEach(tblId => {
-          let tbl = document.getElementById(tblId);
-          if (!tbl) return;
-          tbl.querySelectorAll('tbody tr').forEach(row => {
-            let codeCell = row.cells[row.cells.length === 8 ? 1 : 0];
-            if (!codeCell) return;
-            let code = codeCell.innerText.trim();
-            if (code && backupData.heats[code]) {
-              let r1Input = row.querySelector('.t-r1');
-              let r2Input = row.querySelector('.t-r2');
-              if (r1Input) r1Input.value = backupData.heats[code].r1 || '';
-              if (r2Input) r2Input.value = backupData.heats[code].r2 || '';
-              updateRowTotal(row);
-            }
-          });
-        });
+        // 還原（初賽 + 決賽 + 通用計分表）
+        applyBackup(backupData);
 
+<<<<<<< HEAD
+=======
         // 2. 恢復總決賽成績（若備份中有決賽資料則還原）
         if (backupData.finals) {
           Object.keys(backupData.finals).forEach(raceKey => {
@@ -2573,6 +2900,7 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
           }
         }
 
+>>>>>>> 95735457cd1874ddb32769fe1c82f74fae6219b7
         alert('✅ JSON 備份檔案已成功匯入！所有初賽、總決賽及通用計分表成績已完全恢復。');
       } catch (err) {
         alert('❌ 檔案解析失敗：' + err.message);
@@ -2582,6 +2910,137 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
     };
     reader.readAsText(file);
   }
+
+  // 從自動備份（localStorage）還原——就算下載失敗，資料都保得住
+  function restoreFromStorage() {
+    let raw = null;
+    try { raw = localStorage.getItem('muiwo_score_autobackup'); } catch(e) {}
+    if (!raw) { alert('❌ 未有搵到自動備份。\n請先按一次「匯出 JSON 備份」。'); return; }
+    let data = null;
+    try { data = JSON.parse(raw); } catch(e) {}
+    if (!data || !data.heats) { alert('❌ 自動備份資料損壞。'); return; }
+    if (!confirm(`確定要從自動備份還原嗎？\n備份時間：${data.exportTime || '未知'}\n現有已填寫之資料會被覆蓋。`)) return;
+    applyBackup(data);
+    alert('✅ 已從自動備份還原！');
+  }
+
+  // 將備份資料套用返落個頁面（初賽 + 決賽 + 通用計分表）
+  function applyBackup(backupData) {
+    // 1. 初賽
+    ['table-women', 'table-mixed', 'table-men'].forEach(tblId => {
+      let tbl = document.getElementById(tblId);
+      if (!tbl) return;
+      tbl.querySelectorAll('tbody tr').forEach(row => {
+        let codeIdx = row.cells.length === 8 ? 1 : 0;
+        let codeCell = row.cells[codeIdx];
+        if (!codeCell) return;
+        let code = codeCell.innerText.trim();
+        let item = backupData.heats[code];
+        if (code && item) {
+          let r1Input = row.querySelector('.t-r1');
+          let r2Input = row.querySelector('.t-r2');
+          if (r1Input) r1Input.value = item.r1 || '';
+          if (r2Input) r2Input.value = item.r2 || '';
+          let teamCell = row.querySelector('.team-cell');
+          if (teamCell && item.team) teamCell.innerText = item.team;
+          let totalCell = row.querySelector('.total-cell');
+          if (totalCell && item.total && item.total !== '-') totalCell.innerText = item.total;
+          updateRowTotal(row);
+        }
+      });
+    });
+
+    // 2. 決賽
+    if (backupData.finals) {
+      Object.keys(backupData.finals).forEach(raceKey => {
+        let header = document.querySelector(`.group-header[data-race="${raceKey}"]`);
+        if (!header) return;
+        let rowsData = backupData.finals[raceKey];
+        let cur = header.nextElementSibling;
+        let i = 0;
+        while (cur && !cur.classList.contains('group-header') && i < rowsData.length) {
+          let item = rowsData[i];
+          let codeInput = cur.querySelector('.final-code-input');
+          let teamInput = cur.querySelector('.final-team-input');
+          let timeInput = cur.querySelector('.final-time-input');
+          let time2Input = cur.querySelector('.final-time2-input');
+          let totalCell = cur.querySelector('.final-total-cell');
+          let rankInput = cur.querySelector('.final-rank-input');
+          let heatsInput = cur.querySelector('.final-heats-input');
+
+          if (codeInput && item.code !== undefined) codeInput.value = item.code;
+          if (teamInput && item.team !== undefined) {
+            teamInput.value = item.team;
+            if (item.team) teamInput.style.backgroundColor = '#e8f5e9';
+          }
+          // 初賽成績欄：直接還原備份值（初賽表冇數據都唔會變空白）
+          if (heatsInput && item.heats !== undefined && item.heats !== '') {
+            heatsInput.value = item.heats;
+          }
+          if (timeInput && item.time !== undefined) {
+            // 新版淨係一個「總決賽時間」；舊備份如有第二輪，第二輪就係總決賽時間
+            let finalVal = item.time || '';
+            if (item.time2) finalVal = item.time2;
+            timeInput.value = finalVal;
+            if (finalVal) timeInput.style.backgroundColor = '#fff';
+          }
+          // 舊版備份遷移（淨係舊備份冇 heats 欄先做）：若總決賽時間等於該隊初賽合計
+          // （舊「自動晉級」填落），清走以免當成決賽時間。新版備份有 heats 欄，
+          // 決賽時間係真嘅決賽成績，就算啱啱等於初賽合計都唔會清走。
+          if (item.heats === undefined && timeInput && timeInput.value) {
+            let codeIn = cur.querySelector('.final-code-input');
+            let heatsMsTmp = codeIn ? getHeatsTotalByCode(codeIn.value) : null;
+            if (heatsMsTmp !== null && parseMilliseconds(timeInput.value) === heatsMsTmp) {
+              timeInput.value = '';
+              timeInput.style.backgroundColor = '';
+            }
+          }
+          if (rankInput && item.rank !== undefined) {
+            rankInput.value = item.rank;
+            if (item.rank) {
+              rankInput.style.color = '#c92a2a';
+              rankInput.style.fontWeight = 'bold';
+            }
+          }
+          if (time2Input && item.time2 !== undefined) time2Input.value = item.time2;
+          if (totalCell && item.total !== undefined) totalCell.textContent = item.total || '-';
+          updateFinalRowTotal(cur);
+          // 初賽成績欄保留備份值（唔會被初賽表重算覆寫；初賽表冇數據都唔會變空白）
+          if (heatsInput && item.heats !== undefined && item.heats !== '') heatsInput.value = item.heats;
+          cur = cur.nextElementSibling;
+          i++;
+        }
+      });
+    }
+
+    // 3. 通用計分表
+    if (backupData.general && Array.isArray(backupData.general)) {
+      const gtBody = document.getElementById('generalScoreBody');
+      if (gtBody) {
+        gtBody.innerHTML = '';
+        backupData.general.forEach(item => {
+          const gtr = generalCreateRow();
+          const gset = (sel, val) => { const el = gtr.querySelector(sel); if (el && val !== undefined) el.value = val; };
+          const gsetT = (sel, val) => { const el = gtr.querySelector(sel); if (el && val !== undefined) el.textContent = val; };
+          gset('.g-race', item.race); gset('.g-sched', item.time); gset('.g-code', item.code);
+          gset('.g-team', item.team); gset('.g-lane1', item.lane1); gset('.g-r1', item.r1);
+          gset('.g-lane2', item.lane2); gset('.g-r2', item.r2);
+          gset('.g-fintime', item.finalTime); gsetT('.g-frank', item.finalRank);
+          gtBody.appendChild(gtr);
+          generalUpdateRowTotal(gtr);
+        });
+        syncGeneralToHeats();
+        updateGeneralFinalRanks();
+        syncGeneralToFinals();
+      }
+    }
+  }
+
+
+  // 關閉／離開頁面前自動儲存，確保資料唔會冇咗
+  window.addEventListener('beforeunload', function () {
+    try { localStorage.setItem('muiwo_score_autobackup', JSON.stringify(buildBackupData())); } catch(e) {}
+  });
 
 
   // 列印 / 另存 PDF 功能
