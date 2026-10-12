@@ -233,6 +233,23 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
     line-height: 1.3;
     font-size: 13px;
   }
+
+  /* 總決賽排位顯示門檻：該杯賽所有隊伍完成初賽兩場賽事後先會顯示 */
+  tr.group-header.gate-closed,
+  tr.gate-closed-row { display: none; }
+  .finals-gate-notice {
+    display: none;
+    background: #fff4e5;
+    border: 1.5px dashed #e8590c;
+    color: #a33c00;
+    padding: 10px 14px;
+    border-radius: 6px;
+    margin: 10px 0 6px;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+  }
+  .finals-gate-notice.show { display: block; }
   
   /* Input box for time */
   input.time-input {
@@ -1319,6 +1336,7 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
 <!-- TAB 4: 總決賽 The finals(1) -->
 <div class="tab-content" id="tab-finals1">
 <div class="add-group-bar"><button class="add-group-btn" onclick="refreshFinalsTable('table-finals1')" style="background:#0b7285;" type="button">🔄 更新</button><button class="add-group-btn" onclick="addFinalGroup('table-finals1')" type="button">＋ 加一組（每組最多 6 隊）</button><button class="add-group-btn" onclick="clearFinalsData()" style="background:#c0392b;margin-left:8px;" type="button">🗑 清除總決賽全部資料</button></div>
+<div class="finals-gate-notice">⏳ 各杯賽排位只會喺「該組所有隊伍完成初賽兩場賽事（第一輪＋第二輪）」後先會顯示</div>
 <table class="score-table" id="table-finals1">
 <thead>
 <tr>
@@ -1407,6 +1425,7 @@ Time
 <!-- TAB 5: 總決賽 The finals(2) -->
 <div class="tab-content" id="tab-finals2">
 <div class="add-group-bar"><button class="add-group-btn" onclick="refreshFinalsTable('table-finals2')" style="background:#0b7285;" type="button">🔄 更新</button><button class="add-group-btn" onclick="addFinalGroup('table-finals2')" type="button">＋ 加一組（每組最多 6 隊）</button><button class="add-group-btn" onclick="clearFinalsData()" style="background:#c0392b;margin-left:8px;" type="button">🗑 清除總決賽全部資料</button></div>
+<div class="finals-gate-notice">⏳ 各杯賽排位只會喺「該組所有隊伍完成初賽兩場賽事（第一輪＋第二輪）」後先會顯示</div>
 <table class="score-table" id="table-finals2">
 <thead>
 <tr>
@@ -1996,12 +2015,16 @@ Time
         e.preventDefault();
         this.blur(); // Enter = 確認輸入
         jumpSameCol(1);
-      } else if (e.key === 'Delete') {
+      } else if (e.key === 'Delete' || e.key === 'Backspace') {
         e.preventDefault();
-        this.value = ''; // Delete = 取消：清空當前時間格
-        maybeAutoHeatLane2(this);
-        this.blur();
-        jumpSameCol(1);
+        // 喺時間格按 Delete/Backspace → 取消「嗰架」嘅時間：
+        // 初賽表第一輪＋第二輪一齊清；決賽表清總決賽時間格（唔郁其他格）
+        const row = this.closest('tr');
+        row.querySelectorAll('.t-r1, .t-r2, .final-time-input').forEach(i => { i.value = ''; });
+        const totalCell = row.querySelector('.total-cell, .final-total-cell');
+        if (totalCell) cellSetValue(totalCell, '');
+        updateRowTotal(row);    // 合計重算 ＋ 總決賽顯示門檻（applyFinalsGate）
+        refreshAllFinalTotals(); // 決賽表合計（含初賽成績）同步重算
       } else if (e.key === 'ArrowDown') {
         e.preventDefault();
         this.blur();
@@ -2128,6 +2151,8 @@ Time
         cellSetValue(totalCell, formatTimeMS(s2));
       }
     }
+    // 初賽時間變動 → 即時更新總決賽表顯示門檻（該組所有隊伍完成兩場先顯示排位）
+    applyFinalsGate();
   }
 
   // Export to Excel function using SheetJS
@@ -2138,9 +2163,44 @@ Time
       let table = document.getElementById(tableId);
       let data = [];
       let rows = table.rows;
+      // 總決賽表：匯出時只保留「該組所有隊伍都完成初賽兩場（第一輪＋第二輪都有時間）」嘅杯賽；
+      // 未達標嘅杯賽組別成組唔輸出（唔會出現唔完整嘅排位）。
+      const isFinals = (tableId === 'table-finals1' || tableId === 'table-finals2');
+      let finalsGroupSkipped = false; // 上一個杯賽組別未達標 → 佢嘅資料行一齊跳過
       for (let i = 0; i < rows.length; i++) {
+        let row = rows[i];
+        if (isFinals && row.parentNode !== table.tHead) {
+          if (row.classList && row.classList.contains('group-header')) {
+            // 只有「所有隊伍完成初賽兩場」嘅杯賽先會顯示排位；未達標成組唔輸出
+            if (!isCupReady(row)) { finalsGroupSkipped = true; continue; }
+            finalsGroupSkipped = false;
+            // 保留組別標題；比賽時間併入標題，避免首行被過濾後時間遺失
+            let rowData = [];
+            for (let j = 0; j < row.cells.length; j++) {
+              let cell = row.cells[j];
+              let el = cell.querySelector('input, textarea');
+              let text = el ? el.value : cell.innerText.trim();
+              rowData.push(text.replace(/\n+/g, ' '));
+            }
+            let rtSib = row.nextElementSibling;
+            if (rtSib) {
+              const rtEl = rtSib.querySelector('.race-time-input');
+              if (rtEl) {
+                const rt = rtEl.value.replace(/\n+/g, ' ').trim();
+                if (rt) rowData[0] = rowData[0] ? rowData[0] + '　（' + rt + '）' : rt;
+              }
+            }
+            data.push(rowData);
+            continue;
+          }
+          // 決賽資料行：跟隨所屬杯賽組別（組別已達標即所有隊伍都完成兩場；空行唔輸出）
+          if (finalsGroupSkipped) continue;
+          let codeEl = row.querySelector('.final-code-input');
+          let code = codeEl ? codeEl.value.trim() : '';
+          if (!code) continue;
+        }
         let rowData = [];
-        let cells = rows[i].cells;
+        let cells = row.cells;
         for (let j = 0; j < cells.length; j++) {
           let cell = cells[j];
           let el = cell.querySelector('input, textarea');
@@ -2707,6 +2767,75 @@ Time
     return null;
   }
 
+  // 檢查某隊是否已完成初賽兩場賽事（第一輪 R1 及 第二輪 R2 都有時間）。
+  // 用於匯出／分享時：未完成兩場初賽嘅隊伍唔會顯示喺總決賽表內。
+  function isHeatsCompleted(code) {
+    if (!code) return false;
+    const target = String(code).trim().toUpperCase();
+    for (const tableId of ['table-women', 'table-mixed', 'table-men']) {
+      let table = document.getElementById(tableId);
+      if (!table) continue;
+      let found = null;
+      table.querySelectorAll('tbody tr').forEach(row => {
+        if (found !== null) return;
+        let codeCell = row.cells[row.cells.length === 8 ? 1 : 0]; // handle rowspan
+        if (!codeCell) return;
+        if (cellValue(codeCell).trim().toUpperCase() === target) found = row;
+      });
+      if (found) {
+        let r1 = found.querySelector('.t-r1');
+        let r2 = found.querySelector('.t-r2');
+        let s1 = r1 ? parseMilliseconds(r1.value) : null;
+        let s2 = r2 ? parseMilliseconds(r2.value) : null;
+        return s1 !== null && s2 !== null;
+      }
+    }
+    return false;
+  }
+
+  // 檢查某杯賽組別「所有隊伍」是否已完成初賽兩場賽事：
+  // 每行有編號嘅隊都要 R1＋R2 都有時間先算完成；冇編號嘅空行唔阻礙；
+  // 一隊都未入（未晉級／空白組）當未 ready。
+  function isCupReady(headerTr) {
+    if (!headerTr || !headerTr.classList || !headerTr.classList.contains('group-header')) return false;
+    let filled = 0;
+    let sib = headerTr.nextElementSibling;
+    for (let k = 0; k < 6 && sib && !(sib.classList && sib.classList.contains('group-header')); k++) {
+      const codeEl = sib.querySelector('.final-code-input');
+      const code = codeEl ? codeEl.value.trim() : '';
+      if (code) {
+        filled++;
+        if (!isHeatsCompleted(code)) return false;
+      }
+      sib = sib.nextElementSibling;
+    }
+    return filled > 0;
+  }
+
+  // 更新總決賽表顯示：未符合「該組所有隊伍完成初賽兩場」嘅杯賽組別整組隱藏，
+  // 達標先會顯示排位（畫面、匯出、分享共用同一判斷）。
+  function applyFinalsGate() {
+    try {
+      let anyCup = false, allReady = true;
+      document.querySelectorAll('#table-finals1 .group-header, #table-finals2 .group-header').forEach(hdr => {
+        anyCup = true;
+        const ready = isCupReady(hdr);
+        if (!ready) allReady = false;
+        const rows = [];
+        let sib = hdr.nextElementSibling;
+        for (let k = 0; k < 6 && sib && !(sib.classList && sib.classList.contains('group-header')); k++) {
+          rows.push(sib);
+          sib = sib.nextElementSibling;
+        }
+        hdr.classList.toggle('gate-closed', !ready);
+        rows.forEach(r => r.classList.toggle('gate-closed-row', !ready));
+      });
+      document.querySelectorAll('.finals-gate-notice').forEach(n => {
+        n.classList.toggle('show', anyCup && !allReady);
+      });
+    } catch(e) {}
+  }
+
   // 更新決賽行：初賽成績顯示（參考用）+ 合計 + 名次 + 線道
   // 合計 = 總決賽時間（初賽時間唔會計入）；名次按總決賽時間排（唔計初賽）
   function updateFinalRowTotal(row) {
@@ -2886,6 +3015,9 @@ Time
     // 4. 按初賽排位自動產生決賽線道 Lane（1-6，空行顯示「-」）
     syncFinalLanes();
 
+    // 5. 刷新顯示門檻：該組所有隊伍完成初賽兩場賽事先會顯示排位
+    applyFinalsGate();
+
     if (showAlert) {
       alert(`✅ 已成功將初賽成績自動晉級總決賽！\n\n包含：\n1. 參賽隊伍代號及中文隊名\n2. 初賽成績（顯示喺「初賽成績」欄，僅供參考，唔計入排名）\n3. 初賽排位名次（1 至 6 名）\n4. 自動依龍舟標準中心航道（3、4 道最優）編配，線道 Lane 欄已自動填上！\n\n喺「總決賽時間」欄輸入時間後，名次會自動按總決賽時間重算。`);
     }
@@ -2896,6 +3028,9 @@ Time
     setupTimeInputs();
     setupFinalsAutoFill();
     setupFinalsAutoRank();
+    applyFinalsGate();
+    // （Delete/Backspace 清除功能只限「時間格」：第一輪／第二輪／總決賽時間；
+    //   其他格如比賽時間 textarea 唔受影響，正常編輯）
   });
 
   // 隊伍對照表即時搜尋功能
@@ -3049,6 +3184,15 @@ Time
   // ─────────────────────────────────────────────
   function exportResultsHTML() {
     const data = buildBackupData();
+    // 過濾：分享版嘅總決賽表只顯示「該組所有隊伍都完成初賽兩場（第一輪＋第二輪都有時間）」嘅杯賽；
+    // 未達標嘅杯賽組別唔會顯示排位（成組隱藏，唔會出現唔完整嘅排位）。
+    try {
+      Object.keys(data.finals || {}).forEach(key => {
+        const rows = (data.finals[key] || []).filter(r => r && r.code);
+        const ready = rows.length > 0 && rows.every(r => isHeatsCompleted(r.code));
+        data.finals[key] = ready ? rows : [];
+      });
+    } catch(e) {}
     // 加決賽場次時間（每個 data-race 組嘅 race-time-input）
     try {
       data.raceTimes = {};
@@ -5479,6 +5623,7 @@ function autoAssignHeatLane1() {
   // 重開頁面自動還原上次離開前嘅資料（beforeunload 已自動儲存；呢度靜默還原）
   window.addEventListener('DOMContentLoaded', function() {
     autoRestoreFromStorage();
+    applyFinalsGate();
   });
 </script>
 </body>
