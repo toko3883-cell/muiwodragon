@@ -234,23 +234,6 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
     font-size: 13px;
   }
 
-  /* 總決賽排位顯示門檻：該杯賽所有隊伍完成初賽兩場賽事後先會顯示 */
-  tr.group-header.gate-closed,
-  tr.gate-closed-row { display: none; }
-  .finals-gate-notice {
-    display: none;
-    background: #fff4e5;
-    border: 1.5px dashed #e8590c;
-    color: #a33c00;
-    padding: 10px 14px;
-    border-radius: 6px;
-    margin: 10px 0 6px;
-    font-size: 14px;
-    font-weight: bold;
-    text-align: center;
-  }
-  .finals-gate-notice.show { display: block; }
-  
   /* Input box for time */
   input.time-input {
     width: 120px;
@@ -1336,7 +1319,6 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
 <!-- TAB 4: 總決賽 The finals(1) -->
 <div class="tab-content" id="tab-finals1">
 <div class="add-group-bar"><button class="add-group-btn" onclick="refreshFinalsTable('table-finals1')" style="background:#0b7285;" type="button">🔄 更新</button><button class="add-group-btn" onclick="addFinalGroup('table-finals1')" type="button">＋ 加一組（每組最多 6 隊）</button><button class="add-group-btn" onclick="clearFinalsData()" style="background:#c0392b;margin-left:8px;" type="button">🗑 清除總決賽全部資料</button></div>
-<div class="finals-gate-notice">⏳ 各杯賽排位只會喺「該組所有隊伍完成初賽兩場賽事（第一輪＋第二輪）」後先會顯示</div>
 <table class="score-table" id="table-finals1">
 <thead>
 <tr>
@@ -1425,7 +1407,6 @@ Time
 <!-- TAB 5: 總決賽 The finals(2) -->
 <div class="tab-content" id="tab-finals2">
 <div class="add-group-bar"><button class="add-group-btn" onclick="refreshFinalsTable('table-finals2')" style="background:#0b7285;" type="button">🔄 更新</button><button class="add-group-btn" onclick="addFinalGroup('table-finals2')" type="button">＋ 加一組（每組最多 6 隊）</button><button class="add-group-btn" onclick="clearFinalsData()" style="background:#c0392b;margin-left:8px;" type="button">🗑 清除總決賽全部資料</button></div>
-<div class="finals-gate-notice">⏳ 各杯賽排位只會喺「該組所有隊伍完成初賽兩場賽事（第一輪＋第二輪）」後先會顯示</div>
 <table class="score-table" id="table-finals2">
 <thead>
 <tr>
@@ -2023,7 +2004,7 @@ Time
         row.querySelectorAll('.t-r1, .t-r2, .final-time-input').forEach(i => { i.value = ''; });
         const totalCell = row.querySelector('.total-cell, .final-total-cell');
         if (totalCell) cellSetValue(totalCell, '');
-        updateRowTotal(row);    // 合計重算 ＋ 總決賽顯示門檻（applyFinalsGate）
+        updateRowTotal(row);    // 合計重算
         refreshAllFinalTotals(); // 決賽表合計（含初賽成績）同步重算
       } else if (e.key === 'ArrowDown') {
         e.preventDefault();
@@ -2151,8 +2132,6 @@ Time
         cellSetValue(totalCell, formatTimeMS(s2));
       }
     }
-    // 初賽時間變動 → 即時更新總決賽表顯示門檻（該組所有隊伍完成兩場先顯示排位）
-    applyFinalsGate();
   }
 
   // Export to Excel function using SheetJS
@@ -2812,30 +2791,6 @@ Time
     return filled > 0;
   }
 
-  // 更新總決賽表顯示：未符合「該組所有隊伍完成初賽兩場」嘅杯賽組別整組隱藏，
-  // 達標先會顯示排位（畫面、匯出、分享共用同一判斷）。
-  function applyFinalsGate() {
-    try {
-      let anyCup = false, allReady = true;
-      document.querySelectorAll('#table-finals1 .group-header, #table-finals2 .group-header').forEach(hdr => {
-        anyCup = true;
-        const ready = isCupReady(hdr);
-        if (!ready) allReady = false;
-        const rows = [];
-        let sib = hdr.nextElementSibling;
-        for (let k = 0; k < 6 && sib && !(sib.classList && sib.classList.contains('group-header')); k++) {
-          rows.push(sib);
-          sib = sib.nextElementSibling;
-        }
-        hdr.classList.toggle('gate-closed', !ready);
-        rows.forEach(r => r.classList.toggle('gate-closed-row', !ready));
-      });
-      document.querySelectorAll('.finals-gate-notice').forEach(n => {
-        n.classList.toggle('show', anyCup && !allReady);
-      });
-    } catch(e) {}
-  }
-
   // 更新決賽行：初賽成績顯示（參考用）+ 合計 + 名次 + 線道
   // 合計 = 總決賽時間（初賽時間唔會計入）；名次按總決賽時間排（唔計初賽）
   function updateFinalRowTotal(row) {
@@ -3015,8 +2970,6 @@ Time
     // 4. 按初賽排位自動產生決賽線道 Lane（1-6，空行顯示「-」）
     syncFinalLanes();
 
-    // 5. 刷新顯示門檻：該組所有隊伍完成初賽兩場賽事先會顯示排位
-    applyFinalsGate();
 
     if (showAlert) {
       alert(`✅ 已成功將初賽成績自動晉級總決賽！\n\n包含：\n1. 參賽隊伍代號及中文隊名\n2. 初賽成績（顯示喺「初賽成績」欄，僅供參考，唔計入排名）\n3. 初賽排位名次（1 至 6 名）\n4. 自動依龍舟標準中心航道（3、4 道最優）編配，線道 Lane 欄已自動填上！\n\n喺「總決賽時間」欄輸入時間後，名次會自動按總決賽時間重算。`);
@@ -3028,7 +2981,6 @@ Time
     setupTimeInputs();
     setupFinalsAutoFill();
     setupFinalsAutoRank();
-    applyFinalsGate();
     // （Delete/Backspace 清除功能只限「時間格」：第一輪／第二輪／總決賽時間；
     //   其他格如比賽時間 textarea 唔受影響，正常編輯）
   });
@@ -5623,7 +5575,6 @@ function autoAssignHeatLane1() {
   // 重開頁面自動還原上次離開前嘅資料（beforeunload 已自動儲存；呢度靜默還原）
   window.addEventListener('DOMContentLoaded', function() {
     autoRestoreFromStorage();
-    applyFinalsGate();
   });
 </script>
 </body>
